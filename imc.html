@@ -11,6 +11,12 @@
     <script>
         console.log("Estoy dentro");
 
+        const FOTO_DESNUTRIDO = "imagenes_imc/desnutrido.gif";
+        const FOTO_DELGADO = "imagenes_imc/delgado.gif";
+        const FOTO_IDEAL = "imagenes_imc/ideal.gif";
+        const FOTO_SOBREPESO = "imagenes_imc/sobrepeso.gif";
+        const FOTO_OBESO = "imagenes_imc/obeso.gif";
+
         /**
         Función que calcula el valor nominal del IMC dado el valor numérico
         */
@@ -61,21 +67,21 @@
             switch (imc_nominal) {
                 case "DESNUTRIDO":
                     //asginar al atributo src de la imagen la foto de desnutrido
-                    elto_img.src = "imagenes_imc/desnutrido.gif"
+                    elto_img.src = FOTO_DESNUTRIDO;
                     break;
                 case "DELGADO":
                     //asginar al atributo src de la imagen la foto de delgado
-                    elto_img.src = "imagenes_imc/delgado.gif"
+                    elto_img.src = FOTO_DELGADO;
                     break;
 
                 case "IDEAL":
-                    elto_img.src = "imagenes_imc/ideal.gif"
+                    elto_img.src = FOTO_IDEAL;
                     break;
                 case "SOBREPESO":
-                    elto_img.src = "imagenes_imc/sobrepeso.gif"
+                    elto_img.src = FOTO_SOBREPESO;
                     break;
                 case "OBESO":
-                    elto_img.src = "imagenes_imc/obeso.gif"
+                    elto_img.src = FOTO_OBESO;
 
                     break;
             }
@@ -121,7 +127,6 @@
             let peso = obtenerPeso();
             let imc = calcularIMCNumerico(altura, peso);
             mostrarResultado(imc);
-    
         }
 
     </script>
@@ -135,6 +140,9 @@
         Si es >=18 y <25 = Ideal
         Si es >=25 y <31 = Sobrepeso
         Si es >=31 = Obesidad
+
+        candidatos a constantes
+        intervalos, valores nominales, imagenes
 
         ALGORITMO
         ---------
