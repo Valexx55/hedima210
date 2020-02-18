@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style.css">
 
     <script>
-        //window.alert("Bienvenido");
         console.log("Estoy dentro");
 
         /**
@@ -18,37 +17,111 @@
         function obtenerIMCNominal(imc_numerico) {
             let imc_nominal = "";
 
-                if (imc_numerico < 16) {
-                    imc_nominal = "DESNUTRIDO";
-                } else if ((imc_numerico >= 16) && (imc_numerico < 18)) {
-                    imc_nominal = "DELGADO";
-                } else if ((imc_numerico >= 18) && (imc_numerico < 25)) {
-                    imc_nominal = "IDEAL";
-                } else if ((imc_numerico >= 25) && (imc_numerico < 31)) {
-                    imc_nominal = "SOBREPESO";
-                } else {
-                    imc_nominal = "OBESO";
-                }
+            if (imc_numerico < 16) {
+                imc_nominal = "DESNUTRIDO";
+            } else if ((imc_numerico >= 16) && (imc_numerico < 18)) {
+                imc_nominal = "DELGADO";
+            } else if ((imc_numerico >= 18) && (imc_numerico < 25)) {
+                imc_nominal = "IDEAL";
+            } else if ((imc_numerico >= 25) && (imc_numerico < 31)) {
+                imc_nominal = "SOBREPESO";
+            } else {
+                imc_nominal = "OBESO";
+            }
 
             return imc_nominal;
 
         }
+        /**
+        Función que devuelve el elemento img donde irá la foto del
+        estado del IMC correspondiente.
+        Si no existe ningún elemento, lo crea
+        Si exsite, lo recicla
+        ENTRADAS, SALIDAS, FUNCIONALIDAD, PRECONDICIONES Y POSTCONDICIONES
+        **/
+        function obtenerElementoImg() {
+            let elemento_img;
 
-        function calcularIMC() {
-            console.log("Llamó a calcularIMC");
-            let altura = document.getElementById("inAltura").value;
-            console.log("Altura obtenida " + altura);
-            let peso = document.getElementById("inPeso").value;
-            console.log("Peso obtenido " + peso);
-            let imc = peso / (altura * altura);
-            console.log("Su imc es " + imc);
+            //OBTENENEMOS EL ELTO. PADRE Y VEMOS SI TIENE O HIJOS
+            let padre = document.getElementById("hook_imagen");
+
+            if (padre.childElementCount == 0) {
+                console.log("no existe img, lo creo");
+                elemento_img = document.createElement("img");
+                padre.appendChild(elemento_img);
+            } else {
+                console.log("ya tengo el img, lo reciclo");
+                elemento_img = padre.firstChild;
+            }
+            return elemento_img;
+        }
+        function dibujarImagen(imc_nominal) {
+            //TODO OBTENER EL ELEMENTO IMAGE
+            let elto_img = obtenerElementoImg();
+            switch (imc_nominal) {
+                case "DESNUTRIDO":
+                    //asginar al atributo src de la imagen la foto de desnutrido
+                    elto_img.src = "imagenes_imc/desnutrido.gif"
+                    break;
+                case "DELGADO":
+                    //asginar al atributo src de la imagen la foto de delgado
+                    elto_img.src = "imagenes_imc/delgado.gif"
+                    break;
+
+                case "IDEAL":
+                    elto_img.src = "imagenes_imc/ideal.gif"
+                    break;
+                case "SOBREPESO":
+                    elto_img.src = "imagenes_imc/sobrepeso.gif"
+                    break;
+                case "OBESO":
+                    elto_img.src = "imagenes_imc/obeso.gif"
+
+                    break;
+            }
+        }
+        function obtenerAltura() {
+            let altura;
+
+            altura = document.getElementById("inAltura").value;
+
+            return altura;
+
+        }
+        function obtenerPeso() {
+            let peso;
+
+            peso = document.getElementById("inPeso").value;
+
+            return peso;
+
+        }
+        function calcularIMCNumerico(altura, peso) {
+            let imc_calculado;
+
+            imc_calculado = peso / (altura * altura);
+
+            return imc_calculado;
+        }
+
+        function mostrarResultado(imc) {
             //mostrar el resultado numérico redondeado
-            let resultado_imc = document.getElementById("spIMC");
-            resultado_imc.innerHTML = Math.round(imc);
-           //mostrar el resultado nominal
+            let resultado_imc = document.getElementById("spIMC");//obtengo la caja
+            let imc_redondeado = Math.round(imc);//redondeo el resultado
+            resultado_imc.innerHTML = imc_redondeado;//asigno //TODO MEJORA redondear a dos decimales
+            //mostrar el resultado nominal
             let imc_nominal = obtenerIMCNominal(imc);
+            console.log("IMC nominal " + imc_nominal);
             document.getElementById("spGrupo").innerHTML = imc_nominal;
-
+            //mostramos la imagen
+            dibujarImagen(imc_nominal);
+        }
+        function calcularIMC() {
+            let altura = obtenerAltura();
+            let peso = obtenerPeso();
+            let imc = calcularIMCNumerico(altura, peso);
+            mostrarResultado(imc);
+    
         }
 
     </script>
@@ -85,6 +158,7 @@
         <p class="dato">Usted se encuentra en el grupo: <span id="spGrupo"></span></p class="dato">
 
     </div>
+    <div id="hook_imagen"></div>
 
 
 </body>
