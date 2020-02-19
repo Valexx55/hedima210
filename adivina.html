@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivina número</title>
+
+
+    <style>
+        * {
+            margin: auto;
+        }
+
+        h1 {
+            margin-top: 3em;
+            ;
+        }
+
+        body {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        div {
+            margin-top: 2em;
+            ;
+            width: 30%;
+
+        }
+
+        input {
+            margin-top: 2em;
+            ;
+        }
+    </style>
+
+    <script>
+    //Pasos para el algoritmo para crear un numero aleatorio que el usuario tiene que acertar
+    // 1- Genenerar numero aleatorio
+    // 2- Pueden pasar tres cosas:
+    //    Acierto -> Entonces felicitamos
+    //    Menor   -> Avisamos de que es menor
+    //    Mayor   -> Avisamos de que es mayor
+    // 3- El usuario tiene 5 intentos para acertar
+    // 4- Cada vez que hace un intento vuelve al inicio para volver a preguntar
+    // 5- Si se acaban las vidas mensaje de GAME OVER y link a VOLVER A EMPEZAR
+    window.onload = calcularNumeroSecreto;
+    var numero_secreto; //variable global
+    const MAX_VIDAS = 5;
+    var numero_intentos=0;
+    var acertado = false;
+
+    function calcularNumeroSecreto ()
+    {
+        numero_secreto = Math.floor(Math.random() * (10)) + 1;
+        console.log ("Numero secreto = " + numero_secreto); 
+    }
+
+    function comprobarNumero() 
+    {
+        
+        console.log ("El usuario quiere comprobar su numero");
+        //OBTENER EL NÚMERO INTRODUCIDO POR EL USUARIO
+        var num_usuario = document.getElementById("numeroElegido").value;
+        numero_intentos = numero_intentos + 1;//numero_intentos++;
+        //TODO PENSAR CONDICIÓN DE FIN
+        
+        if (num_usuario==numero_secreto)
+        {
+            console.log ("Acieerrto");
+            window.alert ("Has acertado, CAMPEÓN");
+            acertado=true;
+        } else if (num_usuario < numero_secreto)
+        {
+            console.log ("El número buscado es mayor");
+            window.alert ("PISTA El número buscado es MAYOR");
+
+        } else /*if (num_usuario > numero_secreto)*/ 
+        {
+            console.log ("El número buscado es menor");
+            window.alert ("PISTA El número buscado es MENOR");
+        }
+
+        //si ha alcanzo el límite de intentos y no ha acertado
+        //&& y lógico
+        //|| ó
+        if ((numero_intentos==MAX_VIDAS)&&(!acertado))
+        {
+            console.log ("FIN DEL JUEGO");
+            window.alert("GAME OVER. Reinicio");
+            window.location.reload(true);//recargo la página forzosamente
+        }
+
+    }
+    
+
+    </script>
+</head>
+
+<body>
+
+    <h1> Adivina un número del 1 al 10</h1>
+
+    <div class="caja">
+        <fieldset>
+            <legend> Escoge un número </legend>
+            <input type="number" id="numeroElegido" min="1" max="100"><br>
+            <input type="submit" value="¡Inténtalo!" onclick="comprobarNumero()">
+        </fieldset>
+
+    </div>
+    <!--Cierra caja-->
+
+</body>
+
+</html>
