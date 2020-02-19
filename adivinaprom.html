@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var numero_secreto; //variable global
+        const MAX_VIDAS = 5;
+        var numero_intentos = 0;
+        var acertado = false;
+
+        numero_secreto = Math.floor(Math.random() * (10)) + 1;
+        console.log("Numero secreto = " + numero_secreto);
+
+        window.onload = pedirNumero;
+
+        function pedirNumero() {
+            do {
+                var numero_string = window.prompt("ADIVINA NUMERO");
+                var num_usuario = parseInt(numero_string);//CASTING
+                numero_intentos = numero_intentos + 1;//numero_intentos++;
+                if (num_usuario == numero_secreto) {
+                    console.log("Acieerrto");
+                    window.alert("Has acertado, CAMPEÓN");
+                    acertado = true;
+                } else if (num_usuario < numero_secreto) {
+                    console.log("El número buscado es mayor");
+                    window.alert("PISTA El número buscado es MAYOR");
+                } else /*if (num_usuario > numero_secreto)*/ {
+                    console.log("El número buscado es menor");
+                    window.alert("PISTA El número buscado es MENOR");
+                }
+            } while ((numero_intentos < MAX_VIDAS) && (!acertado))
+            if (!acertado)
+            {
+                console.log ("Ha excedido el numero de intentos");
+                window.alert("GAME OVER. Reinicio");
+                window.location.reload(true);//recargo la página forzosamente
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
