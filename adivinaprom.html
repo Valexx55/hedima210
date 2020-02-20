@@ -9,6 +9,7 @@
         var numero_secreto; //variable global
         const MAX_VIDAS = 5;
         var numero_intentos = 0;
+        var numero_vidas = MAX_VIDAS;
         var acertado = false;
 
         numero_secreto = Math.floor(Math.random() * (10)) + 1;
@@ -18,19 +19,20 @@
 
         function pedirNumero() {
             do {
-                var numero_string = window.prompt("ADIVINA NUMERO");
+                var numero_string = window.prompt("ADIVINA NUMERO ");
                 var num_usuario = parseInt(numero_string);//CASTING
                 numero_intentos = numero_intentos + 1;//numero_intentos++;
+                numero_vidas = numero_vidas -1;//numero_vidas--;
                 if (num_usuario == numero_secreto) {
                     console.log("Acieerrto");
                     window.alert("Has acertado, CAMPEÓN");
                     acertado = true;
                 } else if (num_usuario < numero_secreto) {
                     console.log("El número buscado es mayor");
-                    window.alert("PISTA El número buscado es MAYOR");
+                    window.alert("PISTA El número buscado es MAYOR. Te quedan " + numero_vidas +" intentos");
                 } else /*if (num_usuario > numero_secreto)*/ {
                     console.log("El número buscado es menor");
-                    window.alert("PISTA El número buscado es MENOR");
+                    window.alert("PISTA El número buscado es MENOR. Te quedan " + numero_vidas+" intentos");
                 }
             } while ((numero_intentos < MAX_VIDAS) && (!acertado))
             if (!acertado)

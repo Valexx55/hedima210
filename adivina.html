@@ -45,26 +45,28 @@
     // 3- El usuario tiene 5 intentos para acertar
     // 4- Cada vez que hace un intento vuelve al inicio para volver a preguntar
     // 5- Si se acaban las vidas mensaje de GAME OVER y link a VOLVER A EMPEZAR
-    window.onload = calcularNumeroSecreto;
+    window.onload = calcularNumeroSecretoEIniciarVidas;
     var numero_secreto; //variable global
-    const MAX_VIDAS = 5;
+    const MAX_VIDAS = 10;
     var numero_intentos=0;
     var acertado = false;
 
-    function calcularNumeroSecreto ()
+    function calcularNumeroSecretoEIniciarVidas ()
     {
         numero_secreto = Math.floor(Math.random() * (10)) + 1;
         console.log ("Numero secreto = " + numero_secreto); 
+        document.getElementById("divVidas").innerHTML = MAX_VIDAS;
     }
 
     function comprobarNumero() 
     {
+        //actualizar el contador de vidas
         
         console.log ("El usuario quiere comprobar su numero");
         //OBTENER EL NÚMERO INTRODUCIDO POR EL USUARIO
         var num_usuario = document.getElementById("numeroElegido").value;
         numero_intentos = numero_intentos + 1;//numero_intentos++;
-        //TODO PENSAR CONDICIÓN DE FIN
+        document.getElementById("divVidas").innerHTML = MAX_VIDAS-numero_intentos;//numero de vidas
         
         if (num_usuario==numero_secreto)
         {
@@ -111,6 +113,7 @@
 
     </div>
     <!--Cierra caja-->
+    <div id="divVidas">5</div>
 
 </body>
 
