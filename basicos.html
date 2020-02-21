@@ -7,6 +7,32 @@
     <title>EJERCICIOS BÁSICOS</title>
     <script>
         window.onload = basicos;
+
+
+        /**
+        HACER UNA FUNCIÓN QUE DADAS UNA PALABRA Y UNA LETRA
+        NOS DEVUELVA CUANTAS VECES APARECE ESA LETRA EN LA 
+        PALABRA**/
+        function ejercicio2(palabra, letra) {
+            let contador = 0;
+            let letra_actual = '';
+            //recorrer la palabra
+            //si la letra_actual == letra
+            //contador = contador +1
+
+            for (let index = 0; index < palabra.length; index++) {
+                letra_actual = palabra.charAt(index);//obtengo la letra
+                if (letra_actual == letra)//comparo
+                {
+                    contador = contador + 1;//si son iguales, sumo
+                }
+            }
+
+            return contador;
+        }
+
+
+
         /**
         7) HACER UN PROGRAMA QUE MUESTRE LA SECUENCIA por consola 3, 6, 9, 12, 15 ...99
         */
@@ -14,9 +40,9 @@
 
             var index = 0;
             do {
-                index = index+3;
+                index = index + 3;
                 console.log(index);
-            } while (index <99);
+            } while (index < 99);
             /*var i = 0;
             var resultado = "";
             while (i < 99) {
@@ -43,45 +69,99 @@
              }*/
         }
 
-/**
-1) HACER UN MÉTODO QUE RECIBA UNA CADENA Y UN CARÁCTER Y DIGA SI ESE CARÁCTER PERTENECE A LA CADENA O NO
-*/
-        function ejercicio1(palabra, letra)
-        {//si la palabra contiene la letra, devolvemos true, si no, false
-            
-            var pertenece = false;
+        function ejercicio5(nota) {
+            if (nota < 5) {
+                console.log("suspenso");
+            }
+            else if (nota >= 5 && nota < 6) {
+                console.log("aprobado");
+            }
+            else if (nota >= 6 && nota < 7) {
+                console.log("bien");
+            }
+            else if (nota >=7 && nota < 9) {
+                console.log("notable");
+            }
+            else if (nota >=9 && nota <= 10) {
+                console.log("sobresaliente");
+            } else  {
+                console.log("nota errónea");
+            }
+        }
 
-            let i=0;
+        function ejercicio4 ()
+        {
+            var respuesta = window.prompt("Ingrese su edad");
+            var edad = parseInt(respuesta);//casting de string a nº 
+            if (edad<18)//y así podemos compararlos
+            {
+                console.log ("Eres menor de edad");
+            } else {
+                console.log ("Es mayor de edad");
+            }
+        }
+        function ejercicio3(numero) {
+            var resultado;
+            if (numero % 2 == 0)//el resto de la división entera es cero
+            { resultado = "Es par"; }
+            else { resultado = "Es impar"; }
+
+            return resultado;
+        }
+
+        /**
+        1) HACER UN MÉTODO QUE RECIBA UNA CADENA Y UN CARÁCTER Y DIGA SI ESE CARÁCTER PERTENECE A LA CADENA O NO
+        */
+        function ejercicio1(palabra, letra) {//si la palabra contiene la letra, devolvemos true, si no, false
+
+            var pertenece = false;
+            let posicion = 0;
+            let letra_en_curso = '';
 
             do {
-                
-
-
-                
-            } while (condition);
-            /*
-            for (let index = 0; index < palabra.length; index++) {
-                if (palabra.charAt(index)==letra)
-                {
+                letra_en_curso = palabra.charAt(posicion);
+                if (letra_en_curso == letra) {
                     pertenece = true;
-                    console.log("Encotramos")
-                }     
-            }
-              */
+                    console.log("EncontradA!");
+                } else {
+                    posicion = posicion + 1;
+                }
+            } while ((!pertenece) && (posicion < palabra.length))
             return pertenece;
-      
+        }
+        function ejercicio1v2 (palabra, letra)
+        {
+            var pertenece = false;
             
+                var posicion = palabra.indexOf(letra);
+                if (posicion!=-1)
+                {
+                    pertenece=true;
+                }
+                //pertenece = (palabra.indexOf(letra)!=-1);
 
+            return pertenece;     
         }
         function basicos() {
+            console.log("ejercicio 1");
             var resultado = ejercicio1("va", "a");
             console.log (resultado);
-            /*ejercicio2();
-            ejercicio3();
+            console.log("ejercicio1v2");
+            var resultado1 = ejercicio1v2 ("otorrinolaringólogo", "o");
+            console.log (resultado1);
+            console.log("ejercicio 2");
+            var contador = ejercicio2 ("cocodrilo", "x  ");
+            console.log ("contador = " + contador);
+            console.log("ejercicio 3");
+            var resultado2 = ejercicio3(4);
+            console.log(resultado2);
+            console.log("ejercicio 4");
             ejercicio4();
+            console.log("ejercicio 5");
             ejercicio5();
-            ejercicio6();*/
-            //ejercicio7();
+            /*ejercicio6();*/
+            console.log("ejercicio 7");
+            ejercicio7();
         }
     </script>
 </head>
