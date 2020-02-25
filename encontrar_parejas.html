@@ -25,6 +25,7 @@
 
         td {
             width: 50%;
+            cursor: pointer;
         }
 
         .table {
@@ -33,9 +34,85 @@
 
         .table td, .table th {
             vertical-align: top;
-            border-top: 1px solid #dee2e6;
+            border: 2px solid #388ce0;
         }
     </style>
+    <script>
+        window.onload = iniciarTablero;
+        var primera_vez = true;
+        var td_tocado;
+        var n_aciertos = 0;
+        var max_aciertos;
+
+        function ocultarImagenes ()
+        {
+            var array_imagenes = document.getElementsByTagName("img");
+            console.log(array_imagenes.length);
+            max_aciertos = array_imagenes.length/2;
+            var imagen_actual;
+            //ocultar imágenes
+            for (let index = 0; index < array_imagenes.length; index++) {
+                imagen_actual = array_imagenes[index];
+                console.log("ruta " + imagen_actual.src);
+                imagen_actual.style.visibility="hidden";    
+            }
+        }
+        function programarTds ()
+        {
+             //programar el listener de los tds
+            var array_tds = document.getElementsByTagName("td");
+            var td_actual;//variable auxiliar
+            for (let index = 0; index < array_tds.length; index++) {
+                td_actual = array_tds[index];
+                td_actual.onclick = descubrir;
+                
+            }
+        }
+        function iniciarTablero ()
+        {
+           ocultarImagenes();
+           programarTds();
+        }
+        
+        function tapar (imagen1, imagen2)
+        {
+            imagen1.style.visibility = "hidden";
+            imagen2.style.visibility = "hidden";
+        }
+
+        function descubrir()
+        {
+            /*console.log ("elemento tocado " + this);//this es el elemento que recibe el evento
+            console.log ("imagen tocada " + this.firstChild);
+            this.firstChild.style.visibility = "visible";*/
+            this.firstChild.style.visibility = "visible";
+            if (primera_vez)
+            {
+                console.log ("ha tocado la primera vez");
+                primera_vez = false;
+                td_tocado = this;
+            } else if (this!=td_tocado){
+                console.log ("ha tocado la segunda vez");
+                primera_vez=true;
+                //si las imagenes son iguales
+                if (this.firstChild.src==td_tocado.firstChild.src)
+                {
+                    console.log ("ACIEEERTO!");
+                    n_aciertos = n_aciertos + 1;
+                    if (n_aciertos==max_aciertos)
+                    {
+                        alert("Enhorabuena CHAMPION!");
+                        location.reload(true);
+                    }
+                } else {
+                    console.log ("son disintas");
+                    setTimeout(tapar, 1000, this.firstChild, td_tocado.firstChild);
+                }
+            } else {
+                console.log ("Has tocado la misma imagen");
+            }
+        }
+    </script>
 </head>
 
 <body>
