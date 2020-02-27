@@ -27,6 +27,47 @@
 
             return numero_aleatorio;
         }
+        function mayoriaImpares(numeros_carton)
+        {
+            let mas_impares = false;
+            let total_pares = 0;
+            let total_impares = 0;
+
+                for (let index = 0; index < numeros_carton.length; index++) {
+                    if (numeros_carton[index]%2==0)
+                    {//el numero es par
+                        total_pares++;
+                    } else { //es impar
+                        total_impares++;
+                    }
+                }
+                console.log("PARES " + total_pares + " IMPARES " + total_impares);
+                if (total_impares>total_pares){
+                    mas_impares = true;
+                }//else mas_impares = false
+                //mas_impares = (total_impares>total_pares);
+
+            return mas_impares;
+        }
+        //función que informa por pantalla
+        //si el cartón rx es del gusto de Luisa
+        function comprobarCartonLuisa (numeros_carton)
+        {
+            //si numeros carton tiene el 5 y el 33 
+            if ((numeros_carton.includes (5))&&(numeros_carton.includes (33))&&mayoriaImpares(numeros_carton))
+            {
+                console.log ("Es de Luisa");
+                document.getElementById("resultadoLuisa").innerHTML = "ES DE LUISA";
+            } else {
+                console.log ("NO Es de Luisa");
+                document.getElementById("resultadoLuisa").innerHTML = "NO ES DE LUISA";
+            }
+            //y mayoría de Impares
+                //es de luisa
+            //si no
+                //No es de luisa
+
+        }
         function rellenarCarton()
         {
             //TODO rellenar los tds con números aleatorios [1,90]
@@ -59,7 +100,7 @@
                 
             }while (numeros_carton.length<array_tds.length);
             console.log ("Numeros cartón = " +numeros_carton);
-
+            comprobarCartonLuisa (numeros_carton);
         }
         function dibujarCarton()
         {
@@ -82,5 +123,6 @@
 </head>
 <body>
     <table id="carton"></table>
+    <span id="resultadoLuisa"></span>
 </body>
 </html>
