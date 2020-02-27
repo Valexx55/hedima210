@@ -68,39 +68,66 @@
                 //No es de luisa
 
         }
+
+        /**
+        HACER UNA FUNCIÓN QUE DEVUELVA UN ARRAY CON LOS NÚMEROS
+        QUE NO ESTÁN EN EL CARTÓN
+        **/
+
+        function obtenerNumerosQueNoEstan (numeros_que_estan)
+        {
+            let numeros_que_no_estan = [];
+            //voy del 1 al 90
+            //y si no estan, me lo apunto 
+                for (let index = 1; index <= 90; index++) {
+                   if (numeros_que_estan.indexOf(index)==-1)
+                   {
+                       //index no está, inserto
+                       numeros_que_no_estan.push(index);
+                   }    
+                }
+
+            return numeros_que_no_estan;
+
+        }
+
+        function deMenorAMayor (a, b) {
+            let numero_devuelto;
+                
+                numero_devuelto = a-b;
+
+            return numero_devuelto;
+        }
         function rellenarCarton()
         {
             //TODO rellenar los tds con números aleatorios [1,90]
             //obtener los tds
             let array_tds = document.getElementsByTagName("td");
             let numero_aleatorio;
-            /*for (let index = 0; index < array_tds.length; index++) {
-                numero_aleatorio = generarNumAleatorio();
-                //comprobar que numero_aleatorio NO esté en numeros_carton
-                if (numeros_carton.indexOf(numero_aleatorio)==-1)
-                {
-                    console.log ("numero VÁLIDO");
-                    array_tds[index].innerHTML = numero_aleatorio;
-                    numeros_carton.push(numero_aleatorio);
-                } else {
-                    console.log ("numero REPETIDO " + numero_aleatorio);
-                }
-            }*/
+
             var index=0;
             do{
                 numero_aleatorio = generarNumAleatorio();
                 //comprobar que numero_aleatorio NO esté en numeros_carton
-                if (numeros_carton.indexOf(numero_aleatorio)==-1)
+                if (numeros_carton.indexOf(numero_aleatorio)==-1)//no es repe
                 {
                     console.log ("numero VÁLIDO");
-                    array_tds[index].innerHTML = numero_aleatorio;
+                  //  array_tds[index].innerHTML = numero_aleatorio;
                     numeros_carton.push(numero_aleatorio);
                     index++;
                 }
-                
             }while (numeros_carton.length<array_tds.length);
+            numeros_carton.sort(deMenorAMayor);
+            for (let index=0; index<array_tds.length;index++)
+            {
+                array_tds[index].innerHTML = numeros_carton[index];
+            }
             console.log ("Numeros cartón = " +numeros_carton);
             comprobarCartonLuisa (numeros_carton);
+            var array_no_estan = obtenerNumerosQueNoEstan (numeros_carton);
+            console.log (array_no_estan);
+            console.log ("longi no están " + array_no_estan.length);
+
         }
         function dibujarCarton()
         {
