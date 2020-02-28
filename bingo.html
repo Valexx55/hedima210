@@ -17,7 +17,7 @@
         const MAX_FILAS = 3;
         const MAX_COLUMNAS = 9;
         var numeros_carton = [];//array vacío de números
-        window.onload = dibujarCarton;
+        window.onload = crearCarton;
 
         function generarNumAleatorio()
         {
@@ -94,42 +94,56 @@
         function deMenorAMayor (a, b) {
             let numero_devuelto;
                 
-                numero_devuelto = a-b;
+                numero_devuelto = a-b;//b-a;
 
             return numero_devuelto;
         }
-        function rellenarCarton()
-        {
-            //TODO rellenar los tds con números aleatorios [1,90]
-            //obtener los tds
-            let array_tds = document.getElementsByTagName("td");
-            let numero_aleatorio;
 
+        function generarNumerosCarton ()
+        {
+            var lista_numeros = [];
             var index=0;
             do{
                 numero_aleatorio = generarNumAleatorio();
                 //comprobar que numero_aleatorio NO esté en numeros_carton
-                if (numeros_carton.indexOf(numero_aleatorio)==-1)//no es repe
+                if (lista_numeros.indexOf(numero_aleatorio)==-1)//no es repe
                 {
                     console.log ("numero VÁLIDO");
-                  //  array_tds[index].innerHTML = numero_aleatorio;
-                    numeros_carton.push(numero_aleatorio);
+                    lista_numeros.push(numero_aleatorio);
                     index++;
                 }
-            }while (numeros_carton.length<array_tds.length);
-            numeros_carton.sort(deMenorAMayor);
+            }while (lista_numeros.length<(MAX_COLUMNAS*MAX_FILAS));
+            return lista_numeros;
+        }
+
+        function ordenarNumerosCarton (numeros_carton)
+        {
+            numeros_carton.sort(deMenorAMayor);//orden total
+            //numeros_carton.sort();//orden natural
+        }
+        function dibujarNumerosCarton(numeros_carton)
+        {
+            let array_tds = document.getElementsByTagName("td");
             for (let index=0; index<array_tds.length;index++)
             {
                 array_tds[index].innerHTML = numeros_carton[index];
             }
-            console.log ("Numeros cartón = " +numeros_carton);
-            comprobarCartonLuisa (numeros_carton);
+        }
+        function rellenarCarton()
+        {
+            
+            let numero_aleatorio;
+            numeros_carton = generarNumerosCarton();
+           // ordenarNumerosCarton(numeros_carton);
+            dibujarNumerosCarton(numeros_carton);
+           
+           /* comprobarCartonLuisa (numeros_carton);
             var array_no_estan = obtenerNumerosQueNoEstan (numeros_carton);
             console.log (array_no_estan);
-            console.log ("longi no están " + array_no_estan.length);
+            console.log ("longi no están " + array_no_estan.length);*/
 
         }
-        function dibujarCarton()
+        function crearCarton()
         {
             let tabla = document.getElementById("carton");
             let fila;
