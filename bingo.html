@@ -198,17 +198,33 @@
                 console.log (saca);
             }
 
-            function sacarbola (saca)
+            function sacarBola (saca)
             {
                 let bola_sacada;
-                bola_sacada = saca[pos_saca]
-                document.getElementById("bola_sacada").innerHTML =  bola_sacada; 
+                bola_sacada = saca[pos_saca];
+                document.getElementById("bola_sacada").innerHTML =  bola_sacada;
+                pos_saca++;//para apuntar a la siguiente bola 
                 return bola_sacada;
             }
+            function comprobarBola(bola, numeros_carton)
+            {
+                if (numeros_carton.includes(bola))
+                { // está
+                //marcar
+                //si bingo
+                    //felicitar
+                //si no bingo
+                   //jugar    
+
+                } else {
+                   //no está
+                   jugar();
+                }
+            } 
             function jugar ()
             {
                 //sacarbola
-                sacarbola(saca);
+                let bola_sacada = sacarBola(saca);
                 //comprobarBola
             }
             function rellenarCarton() {
