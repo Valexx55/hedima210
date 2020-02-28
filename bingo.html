@@ -19,6 +19,8 @@
         const MAX_COLUMNAS = 9;
         var numeros_carton = [];//array vacío de números
         window.onload = crearCarton;
+        var saca = [];//todas las bolas
+        var pos_saca=0;//la bola por la que voy
 
         function generarNumAleatorio() {
             let numero_aleatorio;
@@ -155,7 +157,7 @@
             }
             return numero_mayor;
         }
-       
+
         function calcularMenor2(array_numeros) {
             let numero_menor = array_numeros[0];
 
@@ -175,42 +177,80 @@
 
             return numero_menor;
         }
-        function rellenarCarton() {
 
-            let numero_aleatorio;
-            numeros_carton = generarNumerosCarton();
-            console.log(" Mayor --> " + calcularMayor(numeros_carton));
-            console.log(" Menor --> " + calcularMenor(numeros_carton));
-            console.log(" Mayor2 --> " + calcularMayor2(numeros_carton));
-            console.log(" Menor2 --> " + calcularMenor2(numeros_carton));
-            ordenarNumerosCarton(numeros_carton);
-            dibujarNumerosCarton(numeros_carton);
-
-            /* comprobarCartonLuisa (numeros_carton);
-             var array_no_estan = obtenerNumerosQueNoEstan (numeros_carton);
-             console.log (array_no_estan);
-             console.log ("longi no están " + array_no_estan.length);*/
-
-        }
-        function crearCarton() {
-            let tabla = document.getElementById("carton");
-            let fila;
-            let columna;
-            for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
-                fila = document.createElement("tr");
-                for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
-                    columna = document.createElement("td");
-                    fila.appendChild(columna);
-                }
-                tabla.appendChild(fila);
+        function shuffle(a) {
+            var j, x, i;
+            for (i = a.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
             }
-            rellenarCarton();
+            return a;
         }
+            function llenarSaca() {
+                for (let nbola = 1; nbola <= 90; nbola++) {
+                    saca.push(nbola);
+                }
+                console.log (saca);
+                shuffle(saca);
+                console.log ("Saca barajada");
+                console.log (saca);
+            }
+
+            function sacarbola (saca)
+            {
+                let bola_sacada;
+                bola_sacada = saca[pos_saca]
+                document.getElementById("bola_sacada").innerHTML =  bola_sacada; 
+                return bola_sacada;
+            }
+            function jugar ()
+            {
+                //sacarbola
+                sacarbola(saca);
+                //comprobarBola
+            }
+            function rellenarCarton() {
+
+                let numero_aleatorio;
+                numeros_carton = generarNumerosCarton();
+                console.log(" Mayor --> " + calcularMayor(numeros_carton));
+                console.log(" Menor --> " + calcularMenor(numeros_carton));
+                console.log(" Mayor2 --> " + calcularMayor2(numeros_carton));
+                console.log(" Menor2 --> " + calcularMenor2(numeros_carton));
+                ordenarNumerosCarton(numeros_carton);
+                dibujarNumerosCarton(numeros_carton);
+                llenarSaca();
+
+                jugar ();
+
+                /* comprobarCartonLuisa (numeros_carton);
+                 var array_no_estan = obtenerNumerosQueNoEstan (numeros_carton);
+                 console.log (array_no_estan);
+                 console.log ("longi no están " + array_no_estan.length);*/
+
+            }
+            function crearCarton() {
+                let tabla = document.getElementById("carton");
+                let fila;
+                let columna;
+                for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
+                    fila = document.createElement("tr");
+                    for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
+                        columna = document.createElement("td");
+                        fila.appendChild(columna);
+                    }
+                    tabla.appendChild(fila);
+                }
+                rellenarCarton();
+            }
     </script>
 </head>
 
 <body>
     <table id="carton"></table>
+    <span id="bola_sacada"></span>
     <span id="resultadoLuisa"></span>
 </body>
 
