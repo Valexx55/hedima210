@@ -12,6 +12,22 @@
             width: 3em;
             height: 3em;
         }
+
+        #img_anim {
+            width: 200px;
+            height: 200px;
+
+            float: left;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        #bola_sacada{
+            font-size: 40px;
+        }
+        
     </style>
     <script>
         //TODO dibujar cartón
@@ -20,7 +36,7 @@
         var numeros_carton = [];//array vacío de números
         window.onload = iniciarJuego;
         var saca = [];//todas las bolas
-        var pos_saca=0;//la bola por la que voy
+        var pos_saca = 0;//la bola por la que voy
 
         /****FUNCIONES AUXILIARES*****/
 
@@ -45,7 +61,7 @@
             return mas_impares;
         }
 
-//función que informa por pantalla
+        //función que informa por pantalla
         //si el cartón rx es del gusto de Luisa
         function comprobarCartonLuisa(numeros_carton) {
             //si numeros carton tiene el 5 y el 33 
@@ -164,7 +180,7 @@
 
             return numero_aleatorio;
         }
-              
+
         function generarNumerosCarton() {
             var lista_numeros = [];
             var index = 0;
@@ -188,7 +204,7 @@
                 array_tds[index].innerHTML = numeros_carton[index];
             }
         }
-      
+
 
         function shuffle(a) {
             var j, x, i;
@@ -200,109 +216,117 @@
             }
             return a;
         }
-        
-        function llenarSaca() {
-                for (let nbola = 1; nbola <= 90; nbola++) {
-                    saca.push(nbola);
-                }
-                console.log (saca);
-                shuffle(saca);
-                console.log ("Saca barajada");
-                console.log (saca);
-            }
 
-        function sacarBola (saca)
-            {
-                let bola_sacada;
-                bola_sacada = saca[pos_saca];
-                document.getElementById("bola_sacada").innerHTML =  bola_sacada;
-                pos_saca++;//para apuntar a la siguiente bola 
-                return bola_sacada;
+        function llenarSaca() {
+            for (let nbola = 1; nbola <= 90; nbola++) {
+                saca.push(nbola);
             }
-        function marcar (numero)
-        {
+            console.log(saca);
+            shuffle(saca);
+            console.log("Saca barajada");
+            console.log(saca);
+        }
+
+        function sacarBola(saca) {
+            let bola_sacada;
+            bola_sacada = saca[pos_saca];
+
+            pos_saca++;//para apuntar a la siguiente bola 
+            dibujarAnimacion();
+            return bola_sacada;
+        }
+        function marcar(numero) {
             let encontrado = false;
             let i = 0;
             let lista_tds = document.getElementsByTagName("td");
-            do{
-                if (lista_tds[i].innerHTML==numero)
-                {
+            do {
+                if (lista_tds[i].innerHTML == numero) {
                     encontrado = true;
-                    lista_tds[i].innerHTML='';
+                    lista_tds[i].innerHTML = '';
                 } else {
                     i++;
                 }
-            }while((!encontrado))
+            } while ((!encontrado))
         }
-        function comprobarBola(bola, numeros_carton)
-            {
-                if (numeros_carton.includes(bola))
-                { // está
+        function comprobarBola(bola, numeros_carton) {
+            eliminarAnimacion();
+            document.getElementById("bola_sacada").innerHTML = bola;
+            if (numeros_carton.includes(bola)) { // está
                 //borro del cartón
-                marcar (bola);
+                marcar(bola);
                 //borro del array
                 var indice = numeros_carton.indexOf(bola); // obtenemos el indice
                 numeros_carton.splice(indice, 1);
-                if (numeros_carton.length==0)
-                {
+                if (numeros_carton.length == 0) {
                     console.log("BINGGGOOO");
-                    alert("BINGOOOO");
+                    let total_rondas = pos_saca+1;
+                    alert("BINGOOOO en " + total_rondas + " rondas" );
                 } else {
                     console.log("NO Bingo AÚN");
-                    jugar();
+                    setTimeout (jugar, 3000);
                 }
-            
-                } else {
-                   //no está
-                   console.log ("NO está");
-                   jugar();
-                }
-            } 
-        function jugar ()
-            {
-                //sacarbola
-                let bola_sacada = sacarBola(saca);
-                comprobarBola (bola_sacada, numeros_carton);
+
+            } else {
+                //no está
+                console.log("NO está");
+                setTimeout (jugar, 3000);
             }
+        }
+        function dibujarAnimacion() {
+            document.getElementById("animacion").style.visibility = "visible";
+        }
+        function eliminarAnimacion() {
+            document.getElementById("animacion").style.visibility = "hidden";
+        }
+        function jugar() {
+            //sacarbola
+            document.getElementById("bola_sacada").innerHTML = '';
+            let bola_sacada = sacarBola(saca);
+            setTimeout(comprobarBola, 7000, bola_sacada, numeros_carton);
+        }
         function rellenarCarton() {
 
-                let numero_aleatorio;
-                numeros_carton = generarNumerosCarton();
-                console.log(" Mayor --> " + calcularMayor(numeros_carton));
-                console.log(" Menor --> " + calcularMenor(numeros_carton));
-                console.log(" Mayor2 --> " + calcularMayor2(numeros_carton));
-                console.log(" Menor2 --> " + calcularMenor2(numeros_carton));
-                ordenarNumerosCarton(numeros_carton);
-                dibujarNumerosCarton(numeros_carton);    
-            }
-            function crearCarton() {
-                let tabla = document.getElementById("carton");
-                let fila;
-                let columna;
-                for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
-                    fila = document.createElement("tr");
-                    for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
-                        columna = document.createElement("td");
-                        fila.appendChild(columna);
-                    }
-                    tabla.appendChild(fila);
+            let numero_aleatorio;
+            numeros_carton = generarNumerosCarton();
+            console.log(" Mayor --> " + calcularMayor(numeros_carton));
+            console.log(" Menor --> " + calcularMenor(numeros_carton));
+            console.log(" Mayor2 --> " + calcularMayor2(numeros_carton));
+            console.log(" Menor2 --> " + calcularMenor2(numeros_carton));
+            ordenarNumerosCarton(numeros_carton);
+            dibujarNumerosCarton(numeros_carton);
+        }
+        function crearCarton() {
+            let tabla = document.getElementById("carton");
+            let fila;
+            let columna;
+            for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
+                fila = document.createElement("tr");
+                for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
+                    columna = document.createElement("td");
+                    fila.appendChild(columna);
                 }
-                
+                tabla.appendChild(fila);
             }
-        function iniciarJuego ()
-        {
+
+        }
+        function iniciarJuego() {
             crearCarton();//dibujamos los tds vacíos
             rellenarCarton();//rellenamos los tds
             llenarSaca();//preparo el bombo/saca
-            jugar ();//empezamos a sacar bolas
+            jugar();//empezamos a sacar bolas
         }
     </script>
 </head>
 
 <body>
     <table id="carton"></table>
-    <span id="bola_sacada"></span>
+
     <span id="resultadoLuisa"></span>
+    <div id="img_anim">
+        <img id= "animacion" src="bombo.gif" style="visibility: hidden;">
+    </div>
+    <div id="bola_sacada">
+    </div>
 </body>
 
 </html>
