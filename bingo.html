@@ -219,18 +219,42 @@
                 pos_saca++;//para apuntar a la siguiente bola 
                 return bola_sacada;
             }
+        function marcar (numero)
+        {
+            let encontrado = false;
+            let i = 0;
+            let lista_tds = document.getElementsByTagName("td");
+            do{
+                if (lista_tds[i].innerHTML==numero)
+                {
+                    encontrado = true;
+                    lista_tds[i].innerHTML='';
+                } else {
+                    i++;
+                }
+            }while((!encontrado))
+        }
         function comprobarBola(bola, numeros_carton)
             {
                 if (numeros_carton.includes(bola))
                 { // está
-                //marcar
-                //si bingo
-                    //felicitar
-                //si no bingo
-                   //jugar    
-
+                //borro del cartón
+                marcar (bola);
+                //borro del array
+                var indice = numeros_carton.indexOf(bola); // obtenemos el indice
+                numeros_carton.splice(indice, 1);
+                if (numeros_carton.length==0)
+                {
+                    console.log("BINGGGOOO");
+                    alert("BINGOOOO");
+                } else {
+                    console.log("NO Bingo AÚN");
+                    jugar();
+                }
+            
                 } else {
                    //no está
+                   console.log ("NO está");
                    jugar();
                 }
             } 
@@ -238,7 +262,7 @@
             {
                 //sacarbola
                 let bola_sacada = sacarBola(saca);
-                //comprobarBola
+                comprobarBola (bola_sacada, numeros_carton);
             }
         function rellenarCarton() {
 
