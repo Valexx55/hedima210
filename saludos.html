@@ -25,7 +25,25 @@
     		display: inline-block;
     		text-align: center;
     	}
-    </style>
+	</style>
+	<script>
+		const DIR_SERVICIO = "http://192.168.3.61:8080/saludos/Saludos?idioma=";
+		const METODO = "GET";
+		var xhr = new XMLHttpRequest();
+
+		function saludo ()
+		{
+			console.log ("Ha tocado una bandera");
+			//TENGO QUE LLAMRA AL SERVIDOR CON EL IDIOMA
+			xhr.open(METODO, DIR_SERVICIO+"es");
+			xhr.onreadystatechange = consultaEstado;//programo listener
+
+		}
+		function consultaEstado ()
+		{
+
+		}
+	</script>
 </head>
 <body>
 	<!--Caja de texto que refleje el saludo
