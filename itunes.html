@@ -8,6 +8,12 @@
         const DIR_SERVICIO_ITUNES = "https://itunes.apple.com/search/?media=music&term="
         var xhr = new XMLHttpRequest();//ajax
 
+        //TODO MEJORAS
+            //1 DEFINIR EL TH
+            //2 CONTEMPLAR RESPUESTA DISTINTA A 200
+            //3 CONTEMPLAR RESPUESTA SIN RESULTADOS (200)
+            //4 LIMPIAR RESULTADOS DE BÚSQUEDA
+
         function buscarCanciones ()
         {
             console.log ("Tocó buscar");
@@ -23,9 +29,67 @@
             xhr.onreadystatechange = mostrarResultados;
             xhr.send();
         }
+
+        function crearTd (inner)
+        {
+            var nuevo_td;
+
+                nuevo_td = document.createElement ("td");
+                nuevo_td.innerHTML = inner;
+
+            return nuevo_td;
+        }
+       
+        function crearTdImg (src_imagen)
+        {
+            var td_caratula;
+            let img_caractula;
+
+                img_caractula = document.createElement("img");
+                img_caractula.src = src_imagen;
+                //img_caractula.setAttribute("src", src_imagen );
+                td_caratula = crearTd("");
+                td_caratula.appendChild (img_caractula);
+
+            return td_caratula;
+        }
+
+        function crearTdAudio (src_audio)
+        {
+            var td_audio;
+            let audio_element;
+           
+                audio_element = document.createElement("audio");
+                audio_element.src = src_audio;
+                audio_element.setAttribute("controls", true);
+                td_audio = crearTd("");
+
+                td_audio.appendChild (audio_element);
+
+            return td_audio;
+        }
+
         function mostrarCancion (cancion)
         {
-           //TODO MOSTRAR CADA CANCIÓN COMO TR Y SUS ATRIBUTOS COMO TD
+           //CREAMOS LOS TD'S
+           var td_artista = crearTd(cancion.artistName);
+           var td_nombre_cancion = crearTd(cancion.trackName);
+           var td_nombre_album = crearTd(cancion.collectionName);
+           var td_caratula = crearTdImg(cancion.artworkUrl100);
+           var td_muestra_cancion = crearTdAudio(cancion.previewUrl);
+
+           //CREAMOS LA NUEVA FILA
+           var tr_cancion = document.createElement("tr");
+           tr_cancion.appendChild(td_artista);
+           tr_cancion.appendChild(td_nombre_cancion);
+           tr_cancion.appendChild(td_nombre_album);
+           tr_cancion.appendChild(td_caratula);
+           tr_cancion.appendChild(td_muestra_cancion);
+
+
+           //AÑADIMOS LA NUEVA FILA (CANCIÓN) A LA TABLA 
+           let tabla_canciones = document.getElementById("tablaCanciones");
+           tabla_canciones.appendChild(tr_cancion);
         }
         function mostrarResultados ()
         {
