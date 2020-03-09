@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITUNES WEB</title>
+    <script>
+        const DIR_SERVICIO_ITUNES = "https://itunes.apple.com/search/?media=music&term="
+        var xhr = new XMLHttpRequest();//ajax
+
+        function buscarCanciones ()
+        {
+            console.log ("Tocó buscar");
+            let termino = document.getElementById("busqueda").value;
+            console.log ("Tocó buscar " + termino);
+            //hacer la petición
+                //1componer la url
+            let url = DIR_SERVICIO_ITUNES + termino;
+            let url_formateada = encodeURI (url);
+            console.log ("URL formateada " + url_formateada);
+                //2 llamo
+            xhr.open('GET', url_formateada);
+            xhr.onreadystatechange = mostrarResultados;
+            xhr.send();
+        }
+        function mostrarCancion (cancion)
+        {
+           //TODO MOSTRAR CADA CANCIÓN COMO TR Y SUS ATRIBUTOS COMO TD
+        }
+        function mostrarResultados ()
+        {
+            if (xhr.readyState==4)
+            {
+                console.log ("Respuesta recibida");
+                if (xhr.status==200)
+                {
+                    console.log ("Respuesta buena");
+                    console.log ("BODY " + xhr.responseText);
+                    let resultados_busqueda = JSON.parse(xhr.responseText);
+                    for (let i = 0; i<resultados_busqueda.resultCount;i++ )
+                    {
+                        //console.log ("artista " + i + " " +resultados_busqueda.results[i].artistName);
+                        mostrarCancion (resultados_busqueda.results[i]);
+                    }
+                } else {
+                    console.log ("Respuesta chunga " +xhr.status);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="busqueda">
+    <input type="button" onclick="buscarCanciones()" value="BUSCAR">
+    <!-- HOOK PARA RESULTADOS DE BÚSQUEDA -->
+    <table id="tablaCanciones"></table>
+</body>
+</html>
